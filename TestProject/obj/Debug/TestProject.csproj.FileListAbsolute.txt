@@ -1,9 +1,0 @@
-C:\GitHub\EquationToCanonical\TestProject\bin\Debug\TestProject.dll
-C:\GitHub\EquationToCanonical\TestProject\bin\Debug\TestProject.pdb
-C:\GitHub\EquationToCanonical\TestProject\bin\Debug\EquationToCanonical.exe
-C:\GitHub\EquationToCanonical\TestProject\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
-C:\GitHub\EquationToCanonical\TestProject\bin\Debug\EquationToCanonical.pdb
-C:\GitHub\EquationToCanonical\TestProject\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.xml
-C:\GitHub\EquationToCanonical\TestProject\obj\Debug\TestProject.csprojResolveAssemblyReference.cache
-C:\GitHub\EquationToCanonical\TestProject\obj\Debug\TestProject.dll
-C:\GitHub\EquationToCanonical\TestProject\obj\Debug\TestProject.pdb

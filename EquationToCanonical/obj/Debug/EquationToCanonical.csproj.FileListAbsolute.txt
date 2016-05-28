@@ -1,5 +1,0 @@
-C:\GitHub\EquationToCanonical\EquationToCanonical\bin\Debug\EquationToCanonical.exe.config
-C:\GitHub\EquationToCanonical\EquationToCanonical\bin\Debug\EquationToCanonical.exe
-C:\GitHub\EquationToCanonical\EquationToCanonical\bin\Debug\EquationToCanonical.pdb
-C:\GitHub\EquationToCanonical\EquationToCanonical\obj\Debug\EquationToCanonical.exe
-C:\GitHub\EquationToCanonical\EquationToCanonical\obj\Debug\EquationToCanonical.pdb
