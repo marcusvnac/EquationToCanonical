@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,59 +11,60 @@ namespace EquationToCanonical
     {
         static void Main(string[] args)
         {
-            Console.Title = "Equation To Canonical";
-
-            Console.WriteLine("Choose operation mode:");
-            Console.WriteLine("1: File");
-            Console.WriteLine("2: Interactive");
-            Console.WriteLine("==> ");
-
-            int userOption;
-            if (int.TryParse(Console.ReadLine().ToString(), out userOption))
+            // Validate interactive or file mode
+            if (args.Length == 0)
             {
-                Console.WriteLine();
+                Console.Title = "Equation To Canonical";
 
-                switch (userOption)
+                Console.WriteLine("***** Press CTRL+C to exit the program *****");
+                while (true)
                 {
-                    case 1:
+                    Console.WriteLine();
+                    Console.Write("Enter the equation: ");
 
-                        break;
-                    case 2:
+                    string equation = Console.ReadLine();
+
+                    if (String.IsNullOrEmpty(equation))
+                        continue;
+
+                    Console.WriteLine("Transformed Canonical Form: ");
+
+                    Processor pr = new Processor();
+                    try
+                    {
+                        string result = pr.TransformEquation(equation);
+                        Console.Write(result);
                         Console.WriteLine();
-                        Console.WriteLine("***** Press CTRL+C to exit the program *****");
-                        while (true)
-                        {
-                            Console.WriteLine();
-                            Console.Write("Enter the equation: ");
-
-                            string equation = Console.ReadLine();
-
-                            if (String.IsNullOrEmpty(equation))
-                                continue;
-
-                            Console.WriteLine("Transformed Canonical Form: ");
-
-                            Processor pr = new Processor();
-                            try
-                            {
-                                string result = pr.TransformEquation(equation);
-                                Console.Write(result);
-                                Console.WriteLine();
-                            }
-                            catch (InvalidEquationException)
-                            {
-                                Console.WriteLine("=> Enter a valid equation <=");
-                            }
-                        }
-                    default:
-                        Console.WriteLine("Run the program again and choose an avaiable option");
-                        break;
+                    }
+                    catch (InvalidEquationException)
+                    {
+                        Console.WriteLine("=> Enter a valid equation <=");
+                    }
                 }
             }
             else
-                Console.WriteLine("Run the program again and choose an avaiable option");
+            {
+                string filename = args[0];
+                string line, result;
 
-            Console.ReadKey();
+                StreamReader inputFile = new StreamReader(filename);
+                StreamWriter outputFile = new StreamWriter(filename + ".out");
+
+                Console.WriteLine("Processing file...");
+
+                while ((line = inputFile.ReadLine()) != null)
+                {
+                    Processor pr = new Processor();
+                    result = pr.TransformEquation(line);
+
+                    outputFile.WriteLine(result);
+                }
+                inputFile.Close();
+                outputFile.Flush();
+                outputFile.Close();
+
+                Console.WriteLine("File processing finished");
+            }
         }
     }
 }

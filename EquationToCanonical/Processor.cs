@@ -8,8 +8,14 @@ using System.Threading.Tasks;
 
 namespace EquationToCanonical
 {
+    /// <summary>
+    /// Process an equation to transform it into a canonical form
+    /// </summary>
     public class Processor
     {
+        /// <summary>
+        /// Type to store a summand information
+        /// </summary>
         private class Summand
         {
             public double coefficient { get; set; }
@@ -22,7 +28,7 @@ namespace EquationToCanonical
         private static char PLUS_OPERATOR = '+';
         private static char MINUS_OPERATOR = '-';
         private static char EQUAL_OPERATOR = '=';
-
+        
         private List<Summand> SummandsList;
 
         public Processor()
@@ -30,6 +36,11 @@ namespace EquationToCanonical
             SummandsList = new List<Summand>();
         }
 
+        /// <summary>
+        /// Transform a given equation into its canonical form.
+        /// </summary>
+        /// <param name="equation">Equation to be transformed</param>
+        /// <returns><code>String</code> with a canonical for of the given equation</returns>
         public string TransformEquation(string equation)
         {            
             IdentifySummands(equation);
@@ -39,6 +50,10 @@ namespace EquationToCanonical
             return BuildCanonicalString();
         }
 
+        /// <summary>
+        /// Reads the <code>Summand</code> list and transforms it into a canonical string
+        /// </summary>
+        /// <returns><code>String</code> with the canonical form</returns>
         private string BuildCanonicalString()
         {
             StringBuilder result = new StringBuilder();
@@ -88,6 +103,11 @@ namespace EquationToCanonical
             return result.ToString();
         }
 
+        /// <summary>
+        /// Validade if the summands of the equation are valid
+        /// </summary>
+        /// <param name="summandsList">List of summands of the equation</param>
+        /// <returns><code>True</code> if the summands are valid, <code>False</code> otherwise</returns>
         private bool IsValidSummands(List<Summand> summandsList)
         {
             foreach(var summand in summandsList)
@@ -98,6 +118,10 @@ namespace EquationToCanonical
             return false;
         }
 
+        /// <summary>
+        /// Reads the equation and identifies the summands, creating a list of the summands identified
+        /// </summary>
+        /// <param name="equation"><code>String</code> with given equation</param>
         private void IdentifySummands(string equation)
         {
             string coefficient = "";
@@ -111,7 +135,7 @@ namespace EquationToCanonical
             {
                 item = equation[i];  
 
-                if (Char.IsWhiteSpace(item))
+                if (Char.IsWhiteSpace(item) || IsBracket(item))
                 {
                     if (!op.Equals('0') && (String.IsNullOrEmpty(coefficient) && String.IsNullOrEmpty(variable) && String.IsNullOrEmpty(exponential)))
                         continue;
@@ -151,6 +175,15 @@ namespace EquationToCanonical
             AddSummandToList(BuildSummand(coefficient, exponential, variable, op, passEqual));
         }
 
+        /// <summary>
+        /// Builds a <code>Summand</code> object with the information read from the equation string
+        /// </summary>
+        /// <param name="coefficient">Coefficient of the summand</param>
+        /// <param name="exponential">Exponent of the summant</param>
+        /// <param name="variable">Variable of the summand</param>
+        /// <param name="op">Operation. Can be a sum (+) or subtration (-)</param>
+        /// <param name="passEqual">Informs if this summand is on the right or left side of the equality</param>
+        /// <returns></returns>
         private Summand BuildSummand(string coefficient, string exponential, string variable, char op, bool passEqual)
         {
             if (String.IsNullOrEmpty(coefficient))
@@ -169,6 +202,10 @@ namespace EquationToCanonical
             return summand;
         }
 
+        /// <summary>
+        /// Adds a <code>Summand</code> object to the SummandsList, verifying if there is another variable already in list to the sum or subtracted.
+        /// </summary>
+        /// <param name="summand"><code>Summand</code> object to be added to the list</param>
         private void AddSummandToList(Summand summand)
         {
             var found = SummandsList.Find(x => x.variable.Equals(summand.variable) && x.exponential == summand.exponential);
@@ -179,11 +216,29 @@ namespace EquationToCanonical
                 SummandsList.Add(summand);
         }
 
-        private bool IsOperatorSymbol(char item)
+        /// <summary>
+        /// Verify if a character read from the equation string is a operator symbol, like equals (=), minus (-) or plus (+)
+        /// </summary>
+        /// <param name="item">Character read from the equation string</param>
+        /// <returns></returns>
+        private static bool IsOperatorSymbol(char item)
         {
             return (PLUS_OPERATOR.Equals(item)
                     || MINUS_OPERATOR.Equals(item)
                     || EQUAL_OPERATOR.Equals(item));
+        }
+
+        /// <summary>
+        /// Verify if a character read from the equation string is a bracket
+        /// </summary>
+        /// <param name="item">Character read from the equation string</param>
+        /// <returns></returns>
+        private static bool IsBracket(char item)
+        {
+            return ('('.Equals(item)
+                    || ')'.Equals(item)
+                    || ']'.Equals(item)
+                    || '['.Equals(item));
         }
     }
 }
